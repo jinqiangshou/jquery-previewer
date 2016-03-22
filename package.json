@@ -1,0 +1,32 @@
+{
+  "name": "jquery-previewer",
+  "title": "jQuery Previewer for Text/Image",
+  "version": "1.0.0",
+  "description": "A jQuery plugin used to preview image/text",
+  "main": "src/jquery.previewer.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinqiangshou/jquery-previewer.git"
+  },
+  "keywords": [
+    "jquery",
+    "jquery-plugin"
+  ],
+  "author": {
+    "name": "Horst Xu",
+    "email": "271021733@qq.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jinqiangshou/jquery-previewer/issues"
+  },
+  "homepage": "https://github.com/jinqiangshou/jquery-previewer#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3",
+    "jshint": "^2.9.1"
+  }
+}

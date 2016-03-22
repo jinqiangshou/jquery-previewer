@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>jQuery Plugin for Image/Text Preview</title>
+		<script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
+		<script type="text/javascript" src="js/jquery.previewer.min.js" ></script>
+		<style type="text/css">
+			body>div, body>h1 {
+				margin: 2em 2em;
+			}
+			body {
+				font-family: "arial, helvetica, sans-serif";
+			}
+			div.title {
+				font-size: 1.2em;
+			}
+			.block {
+				vertical-align: top;
+				background-color: #CCCCCC;
+				width: 250px;
+				margin: 18px;
+				padding: 10px;
+				border: 5px solid #FFA9CC;
+				border-radius: 5px;
+				display: inline-block;
+			}
+			.code {
+				display: inline-block;
+				margin: 18px;
+				min-height: 84px;
+    			padding: 10px;
+    			font-size: 1em;
+				background-color: #fdf5ce;
+    			border: 5px solid #c77405;
+    			border-radius: 5px;
+			}
+			.block>p {
+				font-size: 1.2em;
+				line-height: 1em;
+				margin: 0.5em auto;
+			}
+			.top-left {
+				display: inline-block;
+				position: relative;
+				top: 0;
+				left: 0;
+				font-size: 0.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>jquery.previewer.js</h1>
+		<div>
+			<h2>Introduction</h2>
+			<p>This is a jQuery plugin to built to preview images or texts in webpages.</p>
+		</div>
+		<div>
+			<h2>Usage</h2>
+			<pre class='code'>$(selector).previewer({
+    trigger: 'click',   // Define what event triggers resource preview, 'click' or 'hover'. (default: click)
+    type: 'image',      // Define resource type, 'image' or 'text'. (default: image)
+    src: '',            // Define resource url. Only valid when 'type' is set to 'image'. (default: '')
+    text: '',           // Define text to be previewed. Only valid when 'type' is set to 'text'. (default: '')
+    containerCSS: {}    // styles applied to the popup layer (image/text container). (default: {})
+});</pre>
+		</div>
+		<div>
+			<h2>Examples</h2>
+		</div>
+		<div>
+			<div class='title'>Example 1: Mouseenter event to trigger image preview.</div>
+			<div id='block1' class='block'>
+				<div class="top-left">#block1</div>
+				<p>Hover over this block to preview image.</p>
+			</div>
+			<pre class='code'>$('#block1').previewer({
+    trigger: 'hover', 
+    type: 'image', 
+    src: 'img/USA.gif'
+});</pre>
+		</div>
+		<hr>
+		<div>
+			<div class='title'>Example 2: Click event to trigger image preview.</div>
+			<div id='block2' class='block'>
+				<div class="top-left">#block2</div>
+				<p>Click here to preview image.</p>
+			</div>
+			<pre class='code'>$('#block2').previewer({
+    trigger: 'click',
+    type: 'image',
+    src: 'img/China.jpg'
+});</pre>
+		</div>
+		<hr>
+		<div>
+			<div class='title'>Example 3: Mouseenter event to trigger text preview.</div>
+			<div id='block3' class='block'>
+				<div class="top-left">#block3</div>
+				<p>Hover over this block to preview text information with self defined styles.</p>
+			</div>
+			<pre class='code'>$('#block3').previewer({
+    trigger: 'hover',
+    type: 'text',
+    text: 'Hello! This is a jQuery plugin by Horst Xu.',
+    containerCSS: {
+        'border': '5px solid #FFCC00',
+        'background-color': '#FFCC00',
+        'border-radius': '5px'
+    }
+});</pre>
+		</div>
+		<hr>
+		<div>
+			<div class='title'>Example 4: Click event to trigger text preview.</div>
+			<div id='block4' class='block'>
+				<div class="top-left">#block4</div>
+				<p>Click here to preview text information.</p>
+			</div>
+			<pre class='code'>$('#block4').previewer({
+    trigger: 'click',
+    type: 'text',
+    text: 'Hello! This is a jQuery plugin by Horst Xu.'
+});</pre>
+		</div>
+		<hr>
+		<div>
+			<div class='title'>Example 5: Self defined container style.</div>
+			<div id='block5' class='block'>
+				<div class='top-left'>#block5</div>
+				<p>Hover over this block to see self defined container style.</p>
+			</div>
+			<pre class='code'>$('#block5').previewer({ 
+    trigger: 'hover',
+    src: 'img/Australia.png',
+    containerCSS:{
+        'border': '20px solid #000000',
+        'border-radius': '8px',
+        'background-color': '#000000'
+    }
+});</pre>
+		</div>
+		<script type="text/javascript">
+			$('#block1').previewer({ trigger: 'hover', type: 'image', src: 'img/USA.gif' });
+			$('#block2').previewer({ trigger: 'click', type: 'image',	src: 'img/China.jpg' });
+			$('#block3').previewer({ 
+				trigger: 'hover', 
+				type: 'text', 
+				text: 'Hello! This is a jQuery plugin by Horst Xu.',
+				containerCSS: {
+					'border': '5px solid #FFCC00',
+					'background-color': '#FFCC00',
+					'border-radius': '5px'
+				}
+			});
+			$('#block4').previewer({
+				trigger: 'click', 
+				type: 'text', 
+				text: 'Hello! This is a jQuery plugin by Horst Xu.',
+			});
+			$('#block5').previewer({ 
+				trigger: 'hover', 
+				src: 'img/Australia.png', 
+				containerCSS: {
+					'border': '20px solid #000000',
+					'border-radius': '8px',
+					'background-color': '#000000'
+				}
+			});
+		</script>
+	</body>
+</html>
