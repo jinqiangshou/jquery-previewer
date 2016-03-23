@@ -5,49 +5,7 @@
         <title>jQuery Plugin for Image/Text Preview</title>
         <script type="text/javascript" src="js/jquery-2.1.0.js" ></script>
         <script type="text/javascript" src="js/jquery.previewer.min.js" ></script>
-        <style type="text/css">
-            body>div, body>h1 {
-                margin: 2em 2em;
-            }
-            body {
-                font-family: "arial, helvetica, sans-serif";
-            }
-            div.title {
-                font-size: 1.2em;
-            }
-            .block {
-                vertical-align: top;
-                background-color: #CCCCCC;
-                width: 250px;
-                margin: 18px;
-                padding: 10px;
-                border: 5px solid #FFA9CC;
-                border-radius: 5px;
-                display: inline-block;
-            }
-            .code {
-                display: inline-block;
-                margin: 18px;
-                min-height: 84px;
-                padding: 10px;
-                font-size: 1em;
-                background-color: #fdf5ce;
-                border: 5px solid #c77405;
-                border-radius: 5px;
-            }
-            .block>p {
-                font-size: 1.2em;
-                line-height: 1em;
-                margin: 0.5em auto;
-            }
-            .top-left {
-                display: inline-block;
-                position: relative;
-                top: 0;
-                left: 0;
-                font-size: 0.5em;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
     </head>
     <body>
         <h1>jquery.previewer.js</h1>
@@ -58,11 +16,18 @@
         <div>
             <h2>Usage</h2>
             <pre class='code'>$(selector).previewer({
-    trigger: 'click',   // Define what event triggers resource preview, 'click' or 'hover'. (default: click)
-    type: 'image',      // Define resource type, 'image' or 'text'. (default: image)
-    src: '',            // Define resource url. Only valid when 'type' is set to 'image'. (default: '')
-    text: '',           // Define text to be previewed. Only valid when 'type' is set to 'text'. (default: '')
-    containerCSS: {}    // styles applied to the popup layer (image/text container). (default: {})
+    trigger: 'click',         // Define what event triggers resource preview, 'click' or 'hover'. (default: click)
+    type: 'image',            // Define resource type, 'image' or 'text'. (default: image)
+    src: '',                  // Define resource url. Only valid when 'type' is set to 'image'. (default: '')
+    text: '',                 // Define text to be previewed. Only valid when 'type' is set to 'text'. (default: '')
+    containerCSS: {},         // Styles applied to the popup layer (image/text container). (default: {}, see <a href="#block5">Example 5</a>)
+    beforeShow: function(){}, // Called before popup layer is shown (see <a href="#block6">Example 6</a>). 
+                              //The function context is HTML DOM that trigger preview event. 
+                              // The function has no parameters.
+    onShow: function(arg1){}  // Called after popup layer is shown. (see <a href="#block6">Example 6</a>)
+                              // The function context is HTML DOM that trigger preview event. 
+                              // The function has one parameter 'arg1', which is the popup layer (a div DOM).
+
 });</pre>
         </div>
         <div>
@@ -141,33 +106,35 @@
     }
 });</pre>
         </div>
-        <script type="text/javascript">
-            $('#block1').previewer({ trigger: 'hover', type: 'image', src: 'img/USA.gif' });
-            $('#block2').previewer({ trigger: 'click', type: 'image',    src: 'img/China.jpg' });
-            $('#block3').previewer({ 
-                trigger: 'hover', 
-                type: 'text', 
-                text: 'Hello! This is a jQuery plugin by Horst Xu.',
-                containerCSS: {
-                    'border': '5px solid #FFCC00',
-                    'background-color': '#FFCC00',
-                    'border-radius': '5px'
-                }
-            });
-            $('#block4').previewer({
-                trigger: 'click', 
-                type: 'text', 
-                text: 'Hello! This is a jQuery plugin by Horst Xu.',
-            });
-            $('#block5').previewer({ 
-                trigger: 'hover', 
-                src: 'img/Australia.png', 
-                containerCSS: {
-                    'border': '20px solid #000000',
-                    'border-radius': '8px',
-                    'background-color': '#000000'
-                }
-            });
-        </script>
+        <hr>
+        <div>
+            <div class='title'>Example 6: Usage of beforeShow and onShow.</div>
+            <div style="display:inline-block;vertical-align:top;">
+                <div id='block6' class='block'>
+                    <div class='top-left'>#block6</div>
+                    <p>Click here to see the change of textarea. You may refer to the browser console to see function context.</p>
+                </div>
+                <textarea id='textarea-block6' class='textarea'></textarea>
+            </div>
+            <pre class='code'>$('#block6').previewer({
+    src: 'img/GreatBritain.jpg',
+    beforeShow: function(){
+        var text = $('textarea#textarea-block6').val();
+        var mytext = 'The function beforeShow is called.';
+        $('textarea#textarea-block6').val(text + mytext + '\n');
+        console.log(mytext);
+        console.log(this);
+    },
+    onShow: function(div){
+        var text = $('textarea#textarea-block6').val();
+        var mytext = 'The function onShow is called.';
+        $('textarea#textarea-block6').val(text + mytext + '\n');
+        console.log(mytext);
+        console.log(this);
+        console.log(div);
+    }
+});</pre>
+        </div>
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
