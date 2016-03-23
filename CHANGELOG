@@ -1,0 +1,7 @@
+v1.0.1
++ added "onShow" and "beforeShow" options
+* changed default popup background from nothing to yellow color
+
+v1.0.0
+- first release
++ support text/image preview and click/hover trigger event

@@ -81,6 +81,12 @@
                 $div.css(css);
             }
         },
+
+        //reset popup layer
+        resetDiv: function($div) {
+            $div.empty();
+            $div.remove();
+        },
         
         //adjust position of popup layer, $div is fixed position
         adjustPosition: function($div) {
@@ -151,6 +157,8 @@
      */
     var Preview = function(container, ops) {
         
+        this.showFlag = false; // preview visibility identifier
+
         this.container = container;
         
         this.cbFunction = null;
@@ -161,7 +169,14 @@
             src: "",
             trigger: "click", // click, hover
             text: "", // used only when type is "text"
-            containerCSS: {}
+            beforeShow: function(){}, // function called before preview layer is shown
+            onShow: function(){}, // function called after preview layer is shown
+            containerCSS: {
+                "border": "1px solid #999",
+                "background-color": "#FFEE88",
+                "border-radius": "5px",
+                "padding": "6px"
+            }
         }, ops, {div: temp_div});
     
         this.init();
@@ -187,7 +202,16 @@
         
         //bind callback function to trigger event
         $(_self.container).on(_self.options.trigger, function(event){
+
+            if(typeof _self.options.beforeShow === "function") {
+                _self.options.beforeShow.call(_self.container);
+            }
+
             _self.cbFunction.call(_self, event, _self.options);
+
+            if(typeof _self.options.onShow === "function") {
+                _self.options.onShow.call(_self.container, _self.options.div[0]);
+            }
         });
     };
     
@@ -223,22 +247,30 @@
         });
         $paragraph.text(options.text);
         
-        options.div.empty();
-        options.div.remove();
+        Helper.resetDiv(options.div);
         
         Helper.domAppend(event, $paragraph, options.div);
         Helper.adjustPosition(options.div);
 
+        _self.showFlag = true; // preview layer is shown now
+
         options.div.one("mouseleave", function(){
-            $(_self.container).off("mouseleave");
-            options.div.empty();
-            options.div.remove();
+            _self.showFlag = false;
+            setTimeout(function(){
+                if(!_self.showFlag) {
+                    $(_self.container).off("mouseleave");
+                    Helper.resetDiv(options.div);
+                }
+            }, 200);
+            
         });
         
         $(_self.container).one("mouseleave", function(){
-            options.div.off("mouseleave");
-            options.div.empty();
-            options.div.remove();
+            _self.showFlag = false;
+            setTimeout(function(){
+                options.div.off("mouseleave");
+                Helper.resetDiv(options.div);
+            }, 200);
         });
     };
     
@@ -277,25 +309,33 @@
         var img = new Image();
         img.src = _self.options.src;
         
-        options.div.empty();
-        options.div.remove();
+        Helper.resetDiv(options.div);
         
         img.onload = function(){
             Helper.domAppend(event, $(img), options.div);
             Helper.resizeImage($(img));
             Helper.adjustPosition(options.div);
+            _self.showFlag = true;
         };
         
         options.div.one("mouseleave", function(){
-            $(_self.container).off("mouseleave");
-            options.div.empty();
-            options.div.remove();
+            _self.showFlag = false;
+            setTimeout(function(){
+                if(!_self.showFlag) {
+                    $(_self.container).off("mouseleave");
+                    Helper.resetDiv(options.div);
+                }
+            }, 200);
         });
         
         $(_self.container).one("mouseleave", function(){
-            options.div.off("mouseleave");
-            options.div.empty();
-            options.div.remove();
+            _self.showFlag = false;
+            setTimeout(function(){
+                if(!_self.showFlag){
+                    options.div.off("mouseleave");
+                    Helper.resetDiv(options.div);
+                }
+            }, 200);
         });
     };
     

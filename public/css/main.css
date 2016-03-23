@@ -1,0 +1,49 @@
+body>div, body>h1 {
+    margin: 2em 2em;
+}
+body {
+    font-family: "arial, helvetica, sans-serif";
+}
+div.title {
+    font-size: 1.2em;
+}
+.block {
+    vertical-align: top;
+    background-color: #CCCCCC;
+    width: 250px;
+    margin: 18px;
+    padding: 10px;
+    border: 5px solid #FFA9CC;
+    border-radius: 5px;
+    display: inline-block;
+}
+.textarea {
+    vertical-align: top;
+    background-color: #CCCCCC;
+    margin: 18px;
+    width: 270px;
+    height: 100px;
+    display: block;
+}
+.code {
+    display: inline-block;
+    margin: 18px;
+    min-height: 84px;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #fdf5ce;
+    border: 5px solid #c77405;
+    border-radius: 5px;
+}
+.block>p {
+    font-size: 1.2em;
+    line-height: 1em;
+    margin: 0.5em auto;
+}
+.top-left {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    left: 0;
+    font-size: 0.5em;
+}
