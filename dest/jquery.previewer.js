@@ -59,7 +59,7 @@
                     "position": "fixed",
                     "z-index": 99999,
                     "left": pos_x,
-                    "top": pos_y,
+                    "top": pos_y
                 }).append($child);
             $(event.target).append($div);
         },
@@ -88,16 +88,31 @@
             $div.remove();
         },
         
+        getVideoRealSize: function(video) {
+            var result = {};
+            if($(video).attr("height")) {
+                result.height = parseInt($(video).attr("height"));
+            } else {
+                result.height = parseInt(video.videoHeight);
+            }
+            if($(video).attr("width")) {
+                result.width = parseInt($(video).attr("width"));
+            } else {
+                result.width = parseInt(video.videoWidth);
+            }
+            return result;
+        },
+
         //adjust position of popup layer, $div is fixed position
-        adjustPosition: function($div) {
+        adjustPosition: function($div, video) {
             
             var winSize = this.getWindowSize();
             var winWidth = winSize.winWidth;
             var winHeight = winSize.winHeight;
             
-            var divHeight = parseInt($div.css("height"));
-            var divWidth = parseInt($div.css("width"));
-            
+            var divHeight = video ? this.getVideoRealSize(video).height : parseInt($div.css("height"));
+            var divWidth = video ? this.getVideoRealSize(video).width : parseInt($div.css("width"));
+
             //distance between $div and window's left border
             var divToLeft = parseInt($div.css("left"));
             var divToTop = parseInt($div.css("top"));
@@ -148,6 +163,40 @@
             }
             
             return {imgWidth: imgWidth, imgHeight: imgHeight};
+        },
+
+        resizeVideo: function($video){
+            var winSize = this.getWindowSize();
+            var winWidth = winSize.winWidth;
+            var winHeight = winSize.winHeight;
+
+            var videoWidth = $video[0].videoWidth;
+            var videoHeight = $video[0].videoHeight;
+
+            //image height should be less than 50% window height
+            var halfWinHeight = winHeight * 0.5;
+            var newWidth = 0;
+            if(videoHeight > halfWinHeight) {
+                newWidth = (halfWinHeight / videoHeight * videoWidth);
+                $video.attr("height", halfWinHeight + "px");
+                $video.attr("width",  newWidth + "px");
+
+                videoHeight = halfWinHeight || 1;
+                videoWidth = newWidth || 1;
+            }
+            
+            //image width should be less than 70% window width
+            var partWinWidth = winWidth * 0.7;
+            var newHeight = 0;
+            if(videoWidth > partWinWidth) {
+                newHeight = (partWinWidth / videoWidth * videoHeight);
+                $video.attr("height", newHeight + "px");
+                $video.attr("width", partWinWidth + "px");
+                videoWidth = partWinWidth;
+                videoHeight = newHeight;
+            }
+            
+            return {videoWidth: videoWidth, videoHeight: videoHeight};
         }
     };
     
@@ -195,6 +244,9 @@
                 break;
             case "text":
                 _self.initTextPreview();
+                break;
+            case "video":
+                _self.initVideoPreview();
                 break;
             default:
                 break;
@@ -345,6 +397,63 @@
         _self.clickImageCb(event, options);
     };
     
+    Preview.prototype.initVideoPreview = function() {
+        var _self = this;
+
+        switch (_self.options.trigger) {
+            case "click":
+                _self.cbFunction = _self.clickVideoCb;
+                break;
+            case "hover":
+                _self.options.trigger = "mouseenter";
+                _self.cbFunction = _self.hoverVideoCb;
+                break;
+            default:
+                _self.options.trigger = "click";
+                _self.cbFunction = _self.clickVideoCb;
+                break;
+        }
+    };
+
+    Preview.prototype.clickVideoCb = function(event, options) {
+        var _self = this;
+
+        var $video = $('<video>').attr('src', options.src)
+                                 .attr('controls', 'controls')
+                                 .attr('autoplay', 'autoplay');
+
+        $video.one("playing", function(){
+            Helper.resizeVideo($(this));
+            Helper.adjustPosition(options.div, this);
+        });
+
+        Helper.resetDiv(options.div);
+
+        Helper.domAppend(event, $video, options.div);
+
+        _self.showFlag = true;
+
+        options.div.one("mouseleave", function(){
+            _self.showFlag = false;
+            setTimeout(function(){
+                if(!_self.showFlag) {
+                    $(_self.container).off("mouseleave");
+                    Helper.resetDiv(options.div);
+                }
+            }, 200);
+        });
+        
+        $(_self.container).one("mouseleave", function(){
+            _self.showFlag = false;
+            setTimeout(function(){
+                if(!_self.showFlag){
+                    options.div.off("mouseleave");
+                    Helper.resetDiv(options.div);
+                }
+            }, 200);
+        });
+    };
+
     $.fn.previewer = function(ops){
         return this.each(function(){
             new Preview(this, ops);

@@ -53,6 +53,11 @@
                 console.log(div);
             }
         });
+        $('#block7').previewer({
+            src: 'movie/animal.ogg',
+            type: 'video',
+            trigger: 'click'
+        });
     });
 
 })(jQuery);
