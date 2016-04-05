@@ -91,12 +91,40 @@
         </div>
         <hr>
         <div>
-            <div class='title'>Example 5: Self defined container style.</div>
+            <div class='title'>Example 5: Mouseenter event to trigger video preview.</div>
+            <div class='remark'>Video Source: <a href="https://github.com/eisneim/react-html5-video" target="_blank">https://github.com/eisneim/react-html5-video</a></div>
             <div id='block5' class='block'>
-                <div class='top-left'>#block5</div>
+                <div class="top-left">#block5</div>
+                <p>Hover over this block to preview video.</p>
+            </div>
+            <pre class='code'>$('#block5').previewer({
+    trigger: 'hover',
+    type: 'video',
+    src: 'movie/h5video.mp4'
+});</pre>
+        </div>
+        <hr>
+        <div>
+            <div class='title'>Example 6: Click event to trigger video preview.</div>
+            <div class='remark'>Video Source: <a href="http://www.w3schools.com/html/html5_video.asp" target="_blank">http://www.w3schools.com/html/html5_video.asp</a></div>
+            <div id='block6' class='block'>
+                <div class="top-left">#block6</div>
+                <p>Click here to preview video.</p>
+            </div>
+            <pre class='code'>$('#block6').previewer({
+    src: 'movie/animal.ogg',
+    type: 'video',
+    trigger: 'click'
+});</pre>
+        </div>
+        <hr>
+        <div>
+            <div class='title'>Example 7: Self defined container style.</div>
+            <div id='block7' class='block'>
+                <div class='top-left'>#block7</div>
                 <p>Hover over this block to see self defined container style.</p>
             </div>
-            <pre class='code'>$('#block5').previewer({ 
+            <pre class='code'>$('#block7').previewer({ 
     trigger: 'hover',
     src: 'img/Australia.png',
     containerCSS:{
@@ -108,33 +136,35 @@
         </div>
         <hr>
         <div>
-            <div class='title'>Example 6: Usage of beforeShow and onShow.</div>
+            <div class='title'>Example 8: Usage of beforeShow and onShow.</div>
             <div style="display:inline-block;vertical-align:top;">
-                <div id='block6' class='block'>
-                    <div class='top-left'>#block6</div>
+                <div id='block8' class='block'>
+                    <div class='top-left'>#block8</div>
                     <p>Click here to see the change of textarea. You may refer to the browser console to see function context.</p>
                 </div>
-                <textarea id='textarea-block6' class='textarea'></textarea>
+                <textarea id='textarea-block8' class='textarea'></textarea>
             </div>
-            <pre class='code'>$('#block6').previewer({
+            <pre class='code'>$('#block8').previewer({
     src: 'img/GreatBritain.jpg',
     beforeShow: function(){
-        var text = $('textarea#textarea-block6').val();
+        var text = $('textarea#textarea-block8').val();
         var mytext = 'The function beforeShow is called.';
-        $('textarea#textarea-block6').val(text + mytext + '\n');
+        $('textarea#textarea-block8').val(text + mytext + '\n');
         console.log(mytext);
         console.log(this);
     },
     onShow: function(div){
-        var text = $('textarea#textarea-block6').val();
+        var text = $('textarea#textarea-block8').val();
         var mytext = 'The function onShow is called.';
-        $('textarea#textarea-block6').val(text + mytext + '\n');
+        $('textarea#textarea-block8').val(text + mytext + '\n');
         console.log(mytext);
         console.log(this);
         console.log(div);
     }
 });</pre>
         </div>
+        <hr>
+
         <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>

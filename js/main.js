@@ -26,7 +26,17 @@
             type: 'text', 
             text: 'Hello! This is a jQuery plugin by Horst Xu.',
         });
-        $('#block5').previewer({ 
+        $('#block5').previewer({
+            trigger: 'hover',
+            type: 'video',
+            src: 'movie/h5video.mp4'
+        });
+        $('#block6').previewer({
+            src: 'movie/animal.ogg',
+            type: 'video',
+            trigger: 'click'
+        });
+        $('#block7').previewer({ 
             trigger: 'hover', 
             src: 'img/Australia.png', 
             containerCSS: {
@@ -35,19 +45,19 @@
                 'background-color': '#000000'
             }
         });
-        $('#block6').previewer({
+        $('#block8').previewer({
             src: 'img/GreatBritain.jpg',
             beforeShow: function(){
-                var text = $('textarea#textarea-block6').val();
+                var text = $('textarea#textarea-block8').val();
                 var mytext = 'The function beforeShow is called.';
-                $('textarea#textarea-block6').val(text + mytext + '\n');
+                $('textarea#textarea-block8').val(text + mytext + '\n');
                 console.log(mytext);
                 console.log(this);
             },
             onShow: function(div){
-                var text = $('textarea#textarea-block6').val();
+                var text = $('textarea#textarea-block8').val();
                 var mytext = 'The function onShow is called.';
-                $('textarea#textarea-block6').val(text + mytext + '\n');
+                $('textarea#textarea-block8').val(text + mytext + '\n');
                 console.log(mytext);
                 console.log(this);
                 console.log(div);
