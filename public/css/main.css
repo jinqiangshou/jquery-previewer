@@ -2,7 +2,10 @@ body>div, body>h1 {
     margin: 2em 2em;
 }
 body {
-    font-family: "arial, helvetica, sans-serif";
+    font-family: arial, helvetica, sans-serif;
+}
+a {
+    text-decoration: none;
 }
 div.title {
     font-size: 1.2em;
@@ -36,7 +39,7 @@ div.title {
     border-radius: 5px;
 }
 .block>p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     line-height: 1em;
     margin: 0.5em auto;
 }
@@ -46,4 +49,8 @@ div.title {
     top: 0;
     left: 0;
     font-size: 0.5em;
+}
+.remark {
+    font-size: .7em;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }

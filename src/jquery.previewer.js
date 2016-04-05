@@ -88,6 +88,7 @@
             $div.remove();
         },
         
+        //get the displayed video's actual size
         getVideoRealSize: function(video) {
             var result = {};
             if($(video).attr("height")) {
@@ -110,8 +111,10 @@
             var winWidth = winSize.winWidth;
             var winHeight = winSize.winHeight;
             
-            var divHeight = video ? this.getVideoRealSize(video).height : parseInt($div.css("height"));
-            var divWidth = video ? this.getVideoRealSize(video).width : parseInt($div.css("width"));
+            var videoRealSize = video ? this.getVideoRealSize(video) : {height: 0, width: 0};
+
+            var divHeight = video ? videoRealSize.height : parseInt($div.css("height"));
+            var divWidth = video ? videoRealSize.width : parseInt($div.css("width"));
 
             //distance between $div and window's left border
             var divToLeft = parseInt($div.css("left"));
@@ -165,6 +168,7 @@
             return {imgWidth: imgWidth, imgHeight: imgHeight};
         },
 
+        //resize video to accommodate window size and mouse target
         resizeVideo: function($video){
             var winSize = this.getWindowSize();
             var winWidth = winSize.winWidth;
@@ -320,8 +324,10 @@
         $(_self.container).one("mouseleave", function(){
             _self.showFlag = false;
             setTimeout(function(){
-                options.div.off("mouseleave");
-                Helper.resetDiv(options.div);
+                if(!_self.showFlag) {
+                    options.div.off("mouseleave");
+                    Helper.resetDiv(options.div);
+                }
             }, 200);
         });
     };
@@ -397,6 +403,7 @@
         _self.clickImageCb(event, options);
     };
     
+    //init video preview
     Preview.prototype.initVideoPreview = function() {
         var _self = this;
 
@@ -415,6 +422,7 @@
         }
     };
 
+    //video preview, mouse click event callback
     Preview.prototype.clickVideoCb = function(event, options) {
         var _self = this;
 
@@ -452,6 +460,11 @@
                 }
             }, 200);
         });
+    };
+
+    Preview.prototype.hoverVideoCb = function(event, options) {
+        var _self = this;
+        _self.clickVideoCb(event, options);
     };
 
     $.fn.previewer = function(ops){
