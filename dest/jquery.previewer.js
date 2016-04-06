@@ -1,12 +1,23 @@
 /**
- * jquery.previewer.js - v1.0.0 - 2016-03-17
+ * jquery.previewer.js - v1.0.2 - 2016-03-17
  * https://github.com/jinqiangshou/jquery-previewer
  * Copyright (c) 2016 Horst Xu
  * Licensed MIT (http://www.opensource.org/licenses/mit-license.php)
  */
 
-!(function($, window, undefined) {
+!(function (factory) {
+    //support AMD
+    if(typeof define === "function" && define.amd) {
+        
+        define(["jquery"], factory);
     
+    } else {
+        
+        factory(jQuery);
+    
+    }
+}(function ($){
+
     "use strict";
 
     var Helper = {
@@ -426,9 +437,9 @@
     Preview.prototype.clickVideoCb = function(event, options) {
         var _self = this;
 
-        var $video = $('<video>').attr('src', options.src)
-                                 .attr('controls', 'controls')
-                                 .attr('autoplay', 'autoplay');
+        var $video = $("<video>").attr("src", options.src)
+                                 .attr("controls", "controls")
+                                 .attr("autoplay", "autoplay");
 
         $video.one("playing", function(){
             Helper.resizeVideo($(this));
@@ -472,5 +483,4 @@
             new Preview(this, ops);
         });
     };
-    
-})(jQuery, window);
+}));

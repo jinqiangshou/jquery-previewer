@@ -17,12 +17,12 @@
             <h2>Usage</h2>
             <pre class='code'>$(selector).previewer({
     trigger: 'click',         // Define what event triggers resource preview, 'click' or 'hover'. (default: click)
-    type: 'image',            // Define resource type, 'image' or 'text'. (default: image)
+    type: 'image',            // Define resource type, 'image' or 'text' or 'video'. (default: image)
     src: '',                  // Define resource url. Only valid when 'type' is set to 'image'. (default: '')
     text: '',                 // Define text to be previewed. Only valid when 'type' is set to 'text'. (default: '')
     containerCSS: {},         // Styles applied to the popup layer (image/text container). (default: {}, see <a href="#block5">Example 5</a>)
     beforeShow: function(){}, // Called before popup layer is shown (see <a href="#block6">Example 6</a>). 
-                              //The function context is HTML DOM that trigger preview event. 
+                              // The function context is HTML DOM that trigger preview event. 
                               // The function has no parameters.
     onShow: function(arg1){}  // Called after popup layer is shown. (see <a href="#block6">Example 6</a>)
                               // The function context is HTML DOM that trigger preview event. 

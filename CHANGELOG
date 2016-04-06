@@ -1,3 +1,7 @@
+v1.0.2
++ added the function of video preview
++ added AMD support
+
 v1.0.1
 + added "onShow" and "beforeShow" options
 * changed default popup background from nothing to yellow color
